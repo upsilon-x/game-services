@@ -26,7 +26,7 @@ truffle config expects this, and so do the other projects.
 
 If at this point the truffle project has not been spun up yet, please do so with:  
 ```
-truffle develop
+npm run development
 migrate
 ```
 
@@ -51,14 +51,14 @@ the second or third account, get their private key, and use it to import a new a
 within metamask.
 
 ## Using Truffle
-Within `truffle develop`, you gain access to more commands. The following commands will be 
+Within `npm run development`, you gain access to more commands. The following commands will be 
 assume that you are within it.  
 
 Nothing special has to be done to ensure that the data wihtin your developer blockchain is 
 saved. Ganache will automatically do it for you when you close and reopen the workspace.  
 
 After you migrate, you shouldn't have to do it again. But, if you mess up a contract's state, 
-you should be able to migrate again: `migrate --reset`. Be careful. Using migrate will reset 
+you should be able to migrate again: `migrate --reset all`. Be careful. Using migrate will reset 
 all of your contracts.  
 
 If you are running tests, please follow 

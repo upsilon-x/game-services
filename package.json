@@ -5,6 +5,7 @@
     "glob": "^7.2.0"
   },
   "scripts": {
-    "createjson": "node createjson.js"
+    "createjson": "node createjson.js",
+    "development": "truffle console --network development"
   }
 }
