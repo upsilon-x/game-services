@@ -1,10 +1,10 @@
 const ProjectNFT = artifacts.require("ProjectNFT");
-const UpdatedMulticall = artifacts.require("UpdatedMulticall");
+const Multicall = artifacts.require("Multicall");
 
 module.exports = function (deployer, network) {
   deployer.deploy(ProjectNFT);
 
   if (network == "development") {
-    deployer.deploy(UpdatedMulticall);
+    deployer.deploy(Multicall);
   }
 };
