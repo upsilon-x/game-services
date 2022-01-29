@@ -16,7 +16,7 @@ git-projects
         - game-services
         - fb-functions
         - interface
-        - simple-interface
+        - dashboard
 ```
 
 ## Initial Setup
@@ -60,15 +60,15 @@ within metamask.
 
 ## Using Truffle
 
-Within `npm run development`, you gain access to more commands. The following commands will be
-assume that you are within it.
-
 Nothing special has to be done to ensure that the data wihtin your developer blockchain is
-saved. Ganache will automatically do it for you when you close and reopen the workspace.
+saved. Ganache will automatically do it for you when you close and reopen the workspace.  
+
+Within `npm run development`, you gain access to more commands. The following commands will be
+assume that you are within it.  
 
 After you migrate, you shouldn't have to do it again. But, if you mess up a contract's state,
 you should be able to migrate again: `migrate --reset all`. Be careful. Using migrate will reset
-all of your contracts.
+all of your contracts. 
 
 If you are running tests, please follow
 [this guide](https://trufflesuite.com/docs/truffle/testing/writing-tests-in-javascript.html).
