@@ -14,8 +14,18 @@ abstract contract PermissionChecker {
      * projectId - the id of the project that you're checking against
      * permission - the specific permission that you're checking against
      */
-    modifier hasAccess(uint projectId, bytes32 permission) {
-        require(projects.hasPermission(msg.sender, projectId, permission), "Doesn't have permission!");
+    modifier hasAccess(uint projectId, bytes32 permission) virtual {
+        require(projects.hasPermission(msg.sender, projectId, permission), "Sender doesn't have permission!");
+        _;
+    }
+
+    /**
+     * user - the user whose permissions you are checking
+     * projectId - the id of the project that you're checking against
+     * permission - the specific permission that you're checking against
+     */
+    modifier userHasAccess(address user, uint projectId, bytes32 permission) virtual {
+        require(projects.hasPermission(user, projectId, permission), "Specific user doesn't have permission!");
         _;
     }
 }
