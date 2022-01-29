@@ -14,7 +14,7 @@ git-projects
         - game-services
         - fb-functions
         - interface
-        - simple-interface
+        - dashboard
 ```
 
 ## Initial Setup
