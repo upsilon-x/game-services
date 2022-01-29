@@ -54,7 +54,7 @@ within metamask.
 Within `npm run development`, you gain access to more commands. The following commands will be 
 assume that you are within it.  
 
-Nothing special has to be done to ensure that the data wihtin your developer blockchain is 
+Nothing special has to be done to ensure that the data within your developer blockchain is 
 saved. Ganache will automatically do it for you when you close and reopen the workspace.  
 
 After you migrate, you shouldn't have to do it again. But, if you mess up a contract's state, 
