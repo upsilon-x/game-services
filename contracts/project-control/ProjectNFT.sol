@@ -2,32 +2,33 @@
 pragma solidity 0.8.11;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "./IPermissionExtension.sol";
+import "./ProjectAccess.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * Owner of a ProjectNFT will have control of a project.
  * This way, a developer can easily transfer or even sell control of a game project in a
  * decentralized and trustless manner.
- * The operator may be set to a smart contract to limit the quality of projects on the platform.
+ * The owner may be set to a smart contract to limit the quality of projects on the platform.
  * This may come in a utility token fee, a greenlight DAO, or some other solution.
  * Initially, the platform will have this restriction turned off. Control of this aspect may be
  * decentralized in the future.
  */
-contract ProjectNFT is ERC721Enumerable, IPermissionExtension {
-    constructor() ERC721("UpsilonX Game Project", "UPSX-PROJ") {
-        operator = msg.sender;
-    }
-
-    address public operator;
+contract ProjectNFT is ERC721Enumerable, Ownable {
+    bytes32 constant ADMIN = 0x00;
     bool public restrictMinter = false;
-    IPermissionExtension permissions;
+    mapping(uint256 => IPermissionExtension) permissions;
+
+    constructor() ERC721("UpsilonX Game Project", "UPSX-PROJ") Ownable() {}
 
     /**
      * Mints a new project NFT. If restrictMinter is true, then only the operator can mint projects.
      */
     function mintProject(address to) external returns (uint256) {
-        if (restrictMinter) require(msg.sender == operator);
+        if (restrictMinter) require(msg.sender == owner());
         uint256 nextId = totalSupply();
         _safeMint(to, nextId);
+        permissions[nextId] = new ProjectAccess(to);
         return nextId;
     }
 
@@ -35,29 +36,22 @@ contract ProjectNFT is ERC721Enumerable, IPermissionExtension {
      * Enables or disables the minter restriction to the operator.
      * Only the operator account can do this.
      */
-    function setMinterRestriction(bool newRestriction) external {
-        require(msg.sender == operator);
+    function setMinterRestriction(bool newRestriction) external onlyOwner {
         restrictMinter = newRestriction;
     }
 
     /**
-     * Sets the permission extension of the contract.
-     * Only the operator account can do this.
+     * Sets the permission logic of a project.
      */
-    function setPermissionExtension(IPermissionExtension newPermissionExtension)
-        external
-    {
-        require(msg.sender == operator);
-        permissions = newPermissionExtension;
-    }
-
-    /**
-     * Sets the operator of the contract.
-     * Only the operator account can do this.
-     */
-    function setOperator(address newOperator) external {
-        require(msg.sender == operator);
-        operator = newOperator;
+    function setPermissionExtension(
+        IPermissionExtension newPermissionExtension,
+        uint256 projectNFT
+    ) external {
+        require(
+            hasPermission(msg.sender, ADMIN, projectNFT),
+            "Only an admin has the ability to change permission logic."
+        );
+        permissions[projectNFT] = newPermissionExtension;
     }
 
     /**
@@ -86,16 +80,17 @@ contract ProjectNFT is ERC721Enumerable, IPermissionExtension {
 
     function hasPermission(
         address addr,
-        uint256 project,
-        bytes32 role
+        bytes32 role,
+        uint256 project
     ) public view returns (bool) {
         if (ownerOf(project) == addr) {
             return true;
         } else {
+            IPermissionExtension perm = permissions[project];
             return
-                address(permissions) == address(0)
+                address(perm) == address(0)
                     ? false
-                    : permissions.hasPermission(addr, project, role);
+                    : perm.hasRole(role, addr);
         }
     }
 

@@ -68,7 +68,7 @@ assume that you are within it.
 
 After you migrate, you shouldn't have to do it again. But, if you mess up a contract's state,
 you should be able to migrate again: `migrate --reset all`. Be careful. Using migrate will reset
-all of your contracts. 
+all of your contracts. Be sure to run `npm run createjson` again.  
 
 If you are running tests, please follow
 [this guide](https://trufflesuite.com/docs/truffle/testing/writing-tests-in-javascript.html).

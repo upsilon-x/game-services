@@ -7,8 +7,8 @@ import "../project-control/PermissionChecker.sol";
  *
  */
 contract AchievementContract is PermissionChecker {
-    bytes32 constant ACHIEVEMENT_PERMISSION = "Achievements";
-    bytes32 constant AWARD_PERMISSION = "Award Achievements";
+    bytes32 constant ACHIEVEMENT_PERMISSION = keccak256("ACHIEVEMENTS");
+    bytes32 constant AWARD_PERMISSION = keccak256("AWARD_ACHIEVEMENTS");
 
     struct Achievement {
         uint8 achievementId;

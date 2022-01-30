@@ -9,7 +9,7 @@ import "./AchievementContract.sol";
  * the "Achievements" permission before it can do anything.
  */
 contract AchievementAggregator is PermissionChecker {
-    bytes32 constant ACHIEVEMENT_PERMISSION = "Achievements";
+    bytes32 constant ACHIEVEMENT_PERMISSION = keccak256("ACHIEVEMENTS");
     
     struct AchievementStats {
         uint128 achievementPoints;
