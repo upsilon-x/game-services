@@ -1,12 +1,13 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   << TestERC20 >>
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
-import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract TestERC20 is ERC20("test", "TST") {
 

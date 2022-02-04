@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   Proxy registry; keeps a mapping of AuthenticatedProxy contracts and mapping of contracts authorized to access them.  
@@ -6,9 +7,9 @@
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
-import "openzeppelin-solidity/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "./OwnableDelegateProxy.sol";
 import "./ProxyRegistryInterface.sol";

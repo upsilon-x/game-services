@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   << Static Market contract >>
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
 import "./lib/ArrayUtils.sol";
 import "./registry/AuthenticatedProxy.sol";
@@ -17,9 +18,7 @@ contract StaticMarket {
 
 	string public constant name = "Static Market";
 
-	constructor ()
-		public
-	{}
+	constructor () {}
 
 	function anyERC1155ForERC20(bytes memory extra,
 		address[7] memory addresses, AuthenticatedProxy.HowToCall[2] memory howToCalls, uint[6] memory uints,

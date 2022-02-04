@@ -1,12 +1,13 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
     StaticERC20 - static calls for ERC20 trades
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
-import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 import "../lib/ArrayUtils.sol";
 import "../registry/AuthenticatedProxy.sol";

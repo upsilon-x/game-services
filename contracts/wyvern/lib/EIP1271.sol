@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   << EIP 1271 >>
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
 abstract contract ERC1271 {
 

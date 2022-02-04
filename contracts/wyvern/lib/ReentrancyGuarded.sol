@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   Simple contract extension to provide a contract-global reentrancy guard on functions.
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
 /**
  * @title ReentrancyGuarded

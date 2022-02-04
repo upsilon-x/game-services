@@ -1,12 +1,13 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   Token recipient. Modified very slightly from the example on http://ethereum.org/dao (just to index log parameters).
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
-import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 /**
  * @title TokenRecipient

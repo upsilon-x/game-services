@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 /**
 
   << TestAuthenticatedProxy >>
@@ -6,9 +7,9 @@
 
 **/
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
-import "./registry/AuthenticatedProxy.sol";
+import "../registry/AuthenticatedProxy.sol";
 
 contract TestAuthenticatedProxy is AuthenticatedProxy {
 

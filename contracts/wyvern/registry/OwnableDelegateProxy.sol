@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   OwnableDelegateProxy
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
 import "./proxy/OwnedUpgradeabilityProxy.sol";
 

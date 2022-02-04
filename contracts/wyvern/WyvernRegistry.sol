@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   << Wyvern Proxy Registry >>
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
 import "./registry/ProxyRegistry.sol";
 import "./registry/AuthenticatedProxy.sol";
@@ -21,7 +22,6 @@ contract WyvernRegistry is ProxyRegistry {
     bool public initialAddressSet = false;
 
     constructor ()
-        public
     {   
         AuthenticatedProxy impl = new AuthenticatedProxy();
         impl.initialize(address(this), this);

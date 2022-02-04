@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   << Wyvern Atomicizer >>
@@ -6,7 +7,7 @@
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
 /**
  * @title WyvernAtomicizer

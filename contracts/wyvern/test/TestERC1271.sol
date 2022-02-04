@@ -1,12 +1,13 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   << TestERC1271 >>
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
-import "./lib/EIP1271.sol";
+import "../lib/EIP1271.sol";
 
 contract TestERC1271 is ERC1271 {
 

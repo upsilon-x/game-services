@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   << Wyvern Exchange >>
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
 import "./exchange/Exchange.sol";
 
@@ -20,7 +21,7 @@ contract WyvernExchange is Exchange {
 
     string public constant codename = "Ancalagon";
 
-    constructor (uint chainId, address[] memory registryAddrs, bytes memory customPersonalSignPrefix) public {
+    constructor (uint chainId, address[] memory registryAddrs, bytes memory customPersonalSignPrefix) {
         DOMAIN_SEPARATOR = hash(EIP712Domain({
             name              : name,
             version           : version,

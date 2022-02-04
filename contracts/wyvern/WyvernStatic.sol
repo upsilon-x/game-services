@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   << Wyvern Static >>
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
 import "./static/StaticERC20.sol";
 import "./static/StaticERC721.sol";
@@ -20,7 +21,6 @@ contract WyvernStatic is StaticERC20, StaticERC721, StaticERC1155, StaticUtil {
     string public constant name = "Wyvern Static";
 
     constructor (address atomicizerAddress)
-        public
     {
         atomicizer = atomicizerAddress;
     }

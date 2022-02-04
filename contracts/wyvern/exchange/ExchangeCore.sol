@@ -1,12 +1,13 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   << Exchange Core >>
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
-import "openzeppelin-solidity/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "../lib/StaticCaller.sol";
 import "../lib/ReentrancyGuarded.sol";
@@ -240,13 +241,13 @@ contract ExchangeCore is ReentrancyGuarded, StaticCaller, EIP712 {
         OwnableDelegateProxy delegateProxy = registry.proxies(maker);
 
         /* Assert existence. */
-        require(delegateProxy != OwnableDelegateProxy(0), "Delegate proxy does not exist for maker");
+        require(delegateProxy != OwnableDelegateProxy(payable(address(0))), "Delegate proxy does not exist for maker");
 
         /* Assert implementation. */
         require(delegateProxy.implementation() == registry.delegateProxyImplementation(), "Incorrect delegate proxy implementation for maker");
 
         /* Typecast. */
-        AuthenticatedProxy proxy = AuthenticatedProxy(address(delegateProxy));
+        AuthenticatedProxy proxy = AuthenticatedProxy(payable(address(delegateProxy)));
 
         /* Execute order. */
         return proxy.proxy(call.target, call.howToCall, call.data);
@@ -338,7 +339,7 @@ contract ExchangeCore is ReentrancyGuarded, StaticCaller, EIP712 {
         /* Transfer any msg.value.
            This is the first "asymmetric" part of order matching: if an order requires Ether, it must be the first order. */
         if (msg.value > 0) {
-            address(uint160(firstOrder.maker)).transfer(msg.value);
+            payable(address(uint160(firstOrder.maker))).transfer(msg.value);
         }
 
         /* Execute first call, assert success.

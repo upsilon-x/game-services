@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 /*
 
   << ArrayUtils >>
@@ -7,9 +8,9 @@
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
-import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 /**
  * @title ArrayUtils
@@ -266,7 +267,7 @@ library ArrayUtils {
         pure
         returns (uint)
     {
-        uint conv = uint(source) << 0x60;
+        uint conv = uint(uint160(source)) << 0x60;
         assembly {
             mstore(index, conv)
             index := add(index, 0x14)

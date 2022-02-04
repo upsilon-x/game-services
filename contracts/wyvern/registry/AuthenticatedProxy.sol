@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: Apache-2.0
 /* 
 
   Proxy contract to hold access to assets on behalf of a user (e.g. ERC20 approve) and execute calls under particular conditions.
 
 */
 
-pragma solidity 0.7.5;
+pragma solidity ^0.8.11;
 
 import "./ProxyRegistry.sol";
 import "./TokenRecipient.sol";
