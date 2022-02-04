@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.11;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "./IPermissionExtension.sol";
 import "./ProjectAccess.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/IAccessControl.sol";
 
 /**
  * Owner of a ProjectNFT will have control of a project.
@@ -43,8 +43,8 @@ contract ProjectNFT is ERC721Enumerable, Ownable {
     /**
      * Sets the permission logic of a project.
      */
-    function setPermissionExtension(
-        IPermissionExtension newPermissionExtension,
+    function setAccessControl(
+        IAccessControl newAccessControl,
         uint256 projectNFT
     ) external {
         require(
