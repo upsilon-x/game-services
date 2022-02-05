@@ -3,14 +3,17 @@ pragma solidity 0.8.11;
 import "../project-control/ProjectNFT.sol";
 import "../project-control/PermissionChecker.sol";
 import "./AchievementContract.sol";
+import "./AchievementLib.sol";
 
 /**
  * Creates achievement contracts & stores them. Needs to be granted access to
- * the "Achievements" permission before it can do anything.
+ * the "Achievements" permission for a project before it can add anything.
  */
 contract AchievementAggregator is PermissionChecker {
     bytes32 constant ACHIEVEMENT_PERMISSION = keccak256("ACHIEVEMENTS");
     
+    using AchievementLib for AchievementLib.Achievement;
+
     struct AchievementStats {
         uint128 achievementPoints;
         uint128 achievementsAwarded;
@@ -42,6 +45,31 @@ contract AchievementAggregator is PermissionChecker {
             projectId,
             projects
         );
+
+        emit AchievementContractCreated(projectId, msg.sender);
+    }
+
+    // Creates an achievement contract with achievements
+    function createAchievements(uint256 projectId, AchievementLib.Achievement[] calldata achievements)
+        public
+        hasAccess(projectId, ACHIEVEMENT_PERMISSION)
+        userHasAccess(msg.sender, projectId, ACHIEVEMENT_PERMISSION)
+    {
+        require(
+            address(achievementContracts[projectId]) == address(0),
+            "Achievements already exist."
+        );
+
+        AchievementContract aContract = new AchievementContract(
+            projectId,
+            projects
+        );
+        achievementContracts[projectId] = aContract;
+        
+        // Creates achievements
+        for(uint i = 0; i < achievements.length; i++) {
+            aContract.createAchievement(achievements[i]);
+        }
 
         emit AchievementContractCreated(projectId, msg.sender);
     }

@@ -2,6 +2,7 @@
 pragma solidity 0.8.11;
 import "../project-control/ProjectNFT.sol";
 import "../project-control/PermissionChecker.sol";
+import "./AchievementLib.sol";
 
 /**
  *
@@ -10,11 +11,7 @@ contract AchievementContract is PermissionChecker {
     bytes32 constant ACHIEVEMENT_PERMISSION = keccak256("ACHIEVEMENTS");
     bytes32 constant AWARD_PERMISSION = keccak256("AWARD_ACHIEVEMENTS");
 
-    struct Achievement {
-        uint8 achievementId;
-        uint16 achievementPoints;
-        uint120 canAchieveMultipleTimes;
-    }
+    using AchievementLib for AchievementLib.Achievement;
 
     event AchievementAwarded(
         address indexed user,
@@ -29,7 +26,7 @@ contract AchievementContract is PermissionChecker {
     address payable aggregator;
 
     // The achievements in the contract
-    mapping(uint8 => Achievement) achievements;
+    mapping(uint8 => AchievementLib.Achievement) achievements;
 
     // Achievements of each player
     mapping(address => uint256) internal achievementsAwarded;
@@ -55,7 +52,7 @@ contract AchievementContract is PermissionChecker {
     }
 
     // Creates an achievement
-    function createAchievement(Achievement memory newAchievement)
+    function createAchievement(AchievementLib.Achievement memory newAchievement)
         external
         hasAccess(projectId, ACHIEVEMENT_PERMISSION)
         returns (uint8 achievementId)
@@ -63,7 +60,7 @@ contract AchievementContract is PermissionChecker {
         return _createAchievement(newAchievement);
     }
 
-    function _createAchievement(Achievement memory newAchievement)
+    function _createAchievement(AchievementLib.Achievement memory newAchievement)
         internal
         returns (uint8 achievementId)
     {
@@ -94,7 +91,7 @@ contract AchievementContract is PermissionChecker {
         uint16 points,
         uint120 canAchieveMultipleTimes
     ) internal achievementExists(id) {
-        Achievement storage a = achievements[id];
+        AchievementLib.Achievement storage a = achievements[id];
         uint16 totalPoints = maxAchievementPoints -
             a.achievementPoints +
             points;
@@ -111,7 +108,7 @@ contract AchievementContract is PermissionChecker {
         external
         hasAccess(projectId, AWARD_PERMISSION)
     {
-        Achievement memory a = achievements[achievementId];
+        AchievementLib.Achievement memory a = achievements[achievementId];
         uint256 achievementBits = achievementsAwarded[user];
         bool hasAchievement = (achievementBits >> achievementId) % 2 == 1;
         uint168 awardCountKey = ((uint160(user) << 8) | achievementId);
