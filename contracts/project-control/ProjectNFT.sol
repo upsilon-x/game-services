@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.11;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "./IPermissionExtension.sol";
-import "./ProjectAccess.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/IAccessControl.sol";
+import "./ProjectAccess.sol";
 
 /**
  * Owner of a ProjectNFT will have control of a project.
@@ -17,7 +17,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract ProjectNFT is ERC721Enumerable, Ownable {
     bytes32 constant ADMIN = 0x00;
     bool public restrictMinter = false;
-    mapping(uint256 => IPermissionExtension) permissions;
+    mapping(uint256 => IAccessControl) permissions;
 
     constructor() ERC721("UpsilonX Game Project", "UPSX-PROJ") Ownable() {}
 
@@ -43,15 +43,15 @@ contract ProjectNFT is ERC721Enumerable, Ownable {
     /**
      * Sets the permission logic of a project.
      */
-    function setPermissionExtension(
-        IPermissionExtension newPermissionExtension,
+    function setAccessControl(
+        IAccessControl newAccessControl,
         uint256 projectNFT
     ) external {
         require(
             hasPermission(msg.sender, ADMIN, projectNFT),
             "Only an admin has the ability to change permission logic."
         );
-        permissions[projectNFT] = newPermissionExtension;
+        permissions[projectNFT] = newAccessControl;
     }
 
     /**
@@ -86,7 +86,7 @@ contract ProjectNFT is ERC721Enumerable, Ownable {
         if (ownerOf(project) == addr) {
             return true;
         } else {
-            IPermissionExtension perm = permissions[project];
+            IAccessControl perm = permissions[project];
             return
                 address(perm) == address(0)
                     ? false
